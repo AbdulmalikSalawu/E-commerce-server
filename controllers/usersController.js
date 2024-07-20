@@ -189,4 +189,31 @@ const addProduct = async (req, response) => {
             console.log("invalid password")
         }
 
-    module.exports = {addProduct,getAllProducts,deleteProduct,signup,loginUser,newCollections,popularInWomen,fetchUser,addToCart,removeFromCart,getCart}
+        const userData = async (req,res)=>{
+            const { token } = req.body;
+            try {
+                const uniqueUser = jwt.verify(token, process.env.JWT_SECRET,(err,res) => {
+                    if(err){
+                        return "token expired";
+                    }
+                    return res;
+                });
+                if(uniqueUser=="token expired"){
+                    return res.json({status: "error", data: "token expired oo"})
+                }
+    
+                const useremail = uniqueUser.email;
+                await customerModel.findOne({email:useremail})
+                .then((data)=>{
+                    return res.json({status:"ok",data:data})
+                })
+                .catch((error)=>{
+                    console.log(error)
+                    return res.json({status:"error",data:error})
+                });}
+                catch(error){
+                    console.log(error)
+                }
+            } 
+
+    module.exports = {addProduct,getAllProducts,deleteProduct,signup,loginUser,newCollections,popularInWomen,fetchUser,addToCart,removeFromCart,getCart,userData}
