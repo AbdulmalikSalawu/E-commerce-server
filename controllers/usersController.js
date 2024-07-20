@@ -108,7 +108,7 @@ const addProduct = async (req, response) => {
         let userData = await customerModel.findOne({_id:req.user.id})
         userData.cartData[req.body.itemId] -=1
         if(userData.cartData[req.body.itemId]>0)
-        await customerModel.findOneAndUpdata({_id:req.user.id},{cartData:userData.cartData})
+        await customerModel.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData})
         res.send("removed")
     }
 
