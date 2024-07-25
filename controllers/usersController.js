@@ -71,7 +71,7 @@ const addProduct = async (req, response) => {
     const popularInWomen = async (req,res) => {
         try {
             let products = await userModel.find();
-            let popular_in_women = products.filter((product, index) => [1, 3, 5, 7].includes(index))
+            let popular_in_women = products.filter((product, index) => [1, 3, 5, 6].includes(index))
             res.send(popular_in_women)
         } catch (error) {
             console.log(error)
