@@ -71,7 +71,7 @@ const addProduct = async (req, response) => {
     const popularInWomen = async (req,res) => {
         try {
             let products = await userModel.find();
-            let popular_in_women = products.filter((product, index) => [2, 4, 6, 8].includes(index))
+            let popular_in_women = products.filter((product, index) => [1, 3, 5, 7].includes(index))
             res.send(popular_in_women)
         } catch (error) {
             console.log(error)
@@ -192,18 +192,19 @@ const addProduct = async (req, response) => {
         const userData = async (req,res)=>{
             const { token } = req.body;
             try {
-                const uniqueUser = jwt.verify(token, process.env.JWT_SECRET,(err,res) => {
+                const uniqueUser = jwt.verify(token,process.env.JWT_SECRET,(err,res) => {
                     if(err){
                         return "token expired";
                     }
-                    return res;
+                    return res
                 });
+                console.log(uniqueUser)
                 if(uniqueUser=="token expired"){
                     return res.json({status: "error", data: "token expired oo"})
                 }
     
-                const useremail = uniqueUser.email;
-                await customerModel.findOne({email:useremail})
+                const userId = uniqueUser.user.id;
+                await customerModel.findOne({_id:userId})
                 .then((data)=>{
                     return res.json({status:"ok",data:data})
                 })
