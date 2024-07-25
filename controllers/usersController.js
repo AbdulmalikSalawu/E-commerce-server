@@ -18,7 +18,7 @@ cloudinary.config({
 const addProduct = async (req, response) => {
 
     const myProducts = await userModel.find();
-    const id = myProducts.length+1
+    const id = myProducts.length+2
 
     const {name,newImage,newPrice,oldPrice,category}= req.body
     if (typeof name === 'undefined' || typeof newPrice === 'undefined' || typeof oldPrice === 'undefined') {
