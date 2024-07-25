@@ -198,7 +198,6 @@ const addProduct = async (req, response) => {
                     }
                     return res
                 });
-                console.log(uniqueUser)
                 if(uniqueUser=="token expired"){
                     return res.json({status: "error", data: "token expired oo"})
                 }
