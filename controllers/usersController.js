@@ -20,7 +20,7 @@ const addProduct = async (req, response) => {
     const myProducts = await userModel.find();
     const id = myProducts.length+2
 
-    const {name,newImage,newPrice,oldPrice,category}= req.body
+    const {name,newImage,newPrice,oldPrice,category,description}= req.body
     if (typeof name === 'undefined' || typeof newPrice === 'undefined' || typeof oldPrice === 'undefined') {
         console.log("missing required fields")
       } 
@@ -31,7 +31,7 @@ const addProduct = async (req, response) => {
             response.send({message:"product already exists"})
         }else{
                 try{
-                    const done = await userModel.create({name,newImage,newPrice,oldPrice,category,id})
+                    const done = await userModel.create({name,newImage,newPrice,oldPrice,category,id,description})
                         if(done){
                             response.send({message:"Product Added",status:true})
                         } else {
@@ -129,6 +129,7 @@ const addProduct = async (req, response) => {
 
     const signup = async (req, response) => {
         const {name,email,password,Date}= req.body
+        console.log(name)
         try{
             const submitData = await customerModel.findOne({email})
             if(submitData){
@@ -143,6 +144,7 @@ const addProduct = async (req, response) => {
                         const done = await customerModel.create({name,email,password,cartData:cart,Date})
                             if(done){
                                 response.send({message:"Signup successful",status:true})
+                                console.log(name)
                                 const data = {
                                     user:{id:done.id}
                                 }
@@ -160,7 +162,8 @@ const addProduct = async (req, response) => {
             }
         catch(error){
             console.log(error)
-        }}
+        }
+    }
 
         const loginUser = async (req,res)=>{
             const {email,password} = req.body
@@ -216,4 +219,25 @@ const addProduct = async (req, response) => {
                 }
             } 
 
-    module.exports = {addProduct,getAllProducts,deleteProduct,signup,loginUser,newCollections,popularInWomen,fetchUser,addToCart,removeFromCart,getCart,userData}
+            const updateDetails = async (req,res)=>{
+            const {id,username} = req.body
+            console.log(req.body)
+            try {
+                await customerModel.updateOne(
+                    {
+                        _id: id,
+                    },
+                    {
+                        $set: {
+                            name: username,
+                        }
+                    }
+                );
+                return res.json({data:"updated"})
+            } catch (error) {
+                console.log(error)
+                res.json({status: "something went wrong"})
+            }
+        }
+
+    module.exports = {addProduct,getAllProducts,deleteProduct,signup,loginUser,newCollections,popularInWomen,fetchUser,addToCart,removeFromCart,getCart,userData,updateDetails}

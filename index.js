@@ -21,7 +21,7 @@ app.get('/',(req,res)=>{
     res.send("code is working!!")
 })
 
-const {addProduct,getAllProducts,deleteProduct,signup,loginUser,newCollections,popularInWomen,fetchUser,addToCart,removeFromCart,userData,getCart} = require('./controllers/usersController');
+const {addProduct,getAllProducts,deleteProduct,signup,loginUser,newCollections,popularInWomen,fetchUser,addToCart,removeFromCart,userData,getCart,updateDetails} = require('./controllers/usersController');
 const customerModel = require("./models/customer.model");
 
 //TO CREATE A USERMODEL FOR PRODUCT UPLOAD, STORAGE, ETC
@@ -49,3 +49,4 @@ app.post("/userData",userData)
 app.post("/addToCart",fetchUser,addToCart)
 app.post("/removeFromCart",fetchUser,removeFromCart)
 app.post("/getCart",fetchUser,getCart)
+app.post("/updatedetails",updateDetails)

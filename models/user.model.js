@@ -7,6 +7,7 @@ let userSchema = mongoose.Schema({
     newPrice: {type:String,required:true},
     oldPrice: {type:String,required:true},
     category: {type:String,required:true},
+    description: {type:String,required:true}
 })
 
 // let customerSchema = mongoose.Schema({
